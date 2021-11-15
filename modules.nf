@@ -1,41 +1,5 @@
-
 /*
- * Process 1: Extract gene models from NetProphetDataSet
- */
-
-process SPLIT_NPS { 
-  
-  input: 
-    val gene
-    path nps
- 
-  output: 
-        tuple path("*_pred.rds"), path("*_res.rds"), val(gene)
-  
-  script:
-  """
-    #!/usr/bin/Rscript
-
-    library(bartNP)
-
-    nps = readRDS("${nps}")
-
-    predictors_output_name = paste0("${gene}", "_pred.rds")
-    response_output_name = paste0("${gene}", "_res.rds")
-
-    regulator_pred_matrix = regPredictors(nps, "${gene}")
-      
-    response_nps = nps["${gene}",]
-
-    saveRDS(regulator_pred_matrix, file = predictors_output_name)
-    saveRDS(response_nps, file = response_output_name)
-
-  """
-}
-
-
-/*
- * Process 2: Run BART on each model
+ * Process 1: Run BART on each gene
  */
 
 process PER_GENE_BART {
@@ -69,7 +33,9 @@ process PER_GENE_BART {
     n_tree = as.numeric(${ntree})
 
     output_filename = paste0("${gene}", "_bart_out.rds")
-
+    
+    # note: this is wrapped in a function in bartNP, but 
+    #       it only calls mc.wbart()
     bart_out = bartForOneGene(predictors, 
                               response_array, 
                               test_data,

@@ -11,7 +11,7 @@
 
 
 /* 
- * npNF is a proof concept pipeline for nextflow
+ * bartNPNF is a proof concept pipeline for nextflow
  * 
  * Chase Mateusiak
  */
@@ -50,10 +50,7 @@ workflow {
     .map{ row-> row.gene }
     .set { genes_ch }
 
-      // PART 1: Data preparation
-      // SPLIT_NPS(genes_ch, params.nps)
-
-      // PART 2: BART modelling
+      // PART 1: BART modelling
       PER_GENE_BART(genes_ch,
                     params.nps,
                     params.ntree, 
