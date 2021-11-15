@@ -10,7 +10,8 @@
 For HTCF, you need the following:
 
 1. [Install using conda](https://bioconda.github.io/recipes/nextflow/README.html)
- - Install this into an environment that you'll remember, eg, maybe one called `nextflow`
+ - Install this into an environment that you'll remember, eg, maybe one called `nextflow`. 
+ The command might look like `conda install -n nextflow nextflow`
 
 ## Running the pipeline on HTCF
 
