@@ -20,7 +20,7 @@ you can look at `/scratch/mblab/chasem/bartNP`
 
 4. Copy the data from `/scratch/mblab/chasem/bartNP/data` into your working directory
 
-5. update the ./bartNPNF/nextflow.config. You should make sure the path is correct in the `params` 
+5. update the ./bartNPNF/nextflow.config. You should make sure the paths are correct in the `params` 
 section for `gene_list`, `nps`, `test_data`, `x.test`. `results` controls where the `results` directory 
 is output to -- default is in the `${launchDir}`. The global variable `${launchDir}` is the directory 
 from which you launch nextflow. If that isn't clear, please ask.
