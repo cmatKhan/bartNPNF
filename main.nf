@@ -29,7 +29,7 @@ nps       : $params.nps
 test_data : $params.test_data
 ntree     : $params.ntree
 results   : $params.results
-ncpu_bart : $params.bart_cpus
+ncpu_bart : "5"
 """
 
 /* 
