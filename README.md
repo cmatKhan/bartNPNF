@@ -9,8 +9,9 @@
 
 For HTCF, you need the following:
 
-1. [Install using conda](https://bioconda.github.io/recipes/nextflow/README.html)
- - Install this into an environment that you'll remember, eg, maybe one called `nextflow`
+1. [Nextflow: install using conda](https://bioconda.github.io/recipes/nextflow/README.html)
+ - Install this into an environment that you'll remember, eg, maybe one called `nextflow`. 
+ The command might look like `conda create -n nextflow nextflow`
 
 ## Running the pipeline on HTCF
 
@@ -19,7 +20,7 @@ you can look at `/scratch/mblab/chasem/bartNP`
 
 4. Copy the data from `/scratch/mblab/chasem/bartNP/data` into your working directory
 
-5. update the ./bartNPNF/nextflow.config. You should make sure the path is correct in the `params` 
+5. update the ./bartNPNF/nextflow.config. You should make sure the paths are correct in the `params` 
 section for `gene_list`, `nps`, `test_data`, `x.test`. `results` controls where the `results` directory 
 is output to -- default is in the `${launchDir}`. The global variable `${launchDir}` is the directory 
 from which you launch nextflow. If that isn't clear, please ask.
