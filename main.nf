@@ -36,7 +36,6 @@ ncpu_bart : $params.bart_cpus
  * Import modules 
  */
 include { 
-  SPLIT_NPS;
   PER_GENE_BART } from './modules.nf' 
 
 /* 
