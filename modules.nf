@@ -10,6 +10,7 @@ process PER_GENE_BART {
 
   input:
     val gene_list
+    path nps
   output:
     file "*_bart_out.rds"
 
@@ -19,9 +20,9 @@ process PER_GENE_BART {
 
     library(bartNP)
     
-    nps = readRDS("${params.nps}")
+    nps = readRDS(${params.nps})
 
-    gene_list = split("${gene_list}", ",")[[1]]
+    gene_list = strsplit(${gene_list}, ",")[[1]]
 
     test_data = readRDS("${params.test_data}")
         

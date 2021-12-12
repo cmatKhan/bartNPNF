@@ -50,6 +50,7 @@ workflow {
     .set { genes_ch }
 
       // PART 1: BART modelling
-      PER_GENE_BART(genes_ch)
+      PER_GENE_BART(genes_ch,
+                    params.nps)
 
 }
