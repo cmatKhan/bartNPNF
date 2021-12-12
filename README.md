@@ -15,6 +15,18 @@ For HTCF, you need the following:
 
 ## Running the pipeline on HTCF
 
+2. Create a params file
+
+```{json}
+{
+"gene_list": "data/gene_list_10.csv",
+"nps": "data/kemmeren_np_fltr.rds",
+"test_data": "data/test_tf_levels_full.rds",
+"results": "results_10",
+"x.test": "data/test_tf_levels_full.rds"
+}
+```
+
 3. Clone this repository to whatever the working directory will be for running bart. For example, 
 you can look at `/scratch/mblab/chasem/bartNP`
 
