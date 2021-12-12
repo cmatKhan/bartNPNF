@@ -20,7 +20,7 @@ process PER_GENE_BART {
 
     library(bartNP)
     
-    nps = readRDS(${params.nps})
+    nps = readRDS("${params.nps}")
 
     gene_list = strsplit(${gene_list}, ",")[[1]]
 
