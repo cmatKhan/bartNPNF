@@ -45,7 +45,7 @@ workflow {
 
   Channel
     .fromPath(params.gene_list)
-    .splitTsv(header:true)
+    .splitCsv(header:true, sep="\t")
     .map{ row-> row.gene }
     .set { genes_ch }
 
