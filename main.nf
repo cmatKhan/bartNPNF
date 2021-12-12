@@ -45,14 +45,11 @@ workflow {
 
   Channel
     .fromPath(params.gene_list)
-    .splitCsv(header:true)
+    .splitTsv(header:true)
     .map{ row-> row.gene }
     .set { genes_ch }
 
       // PART 1: BART modelling
-      PER_GENE_BART(genes_ch,
-                    params.nps,
-                    params.ntree, 
-                    params.test_data)
+      PER_GENE_BART(genes_ch)
 
 }

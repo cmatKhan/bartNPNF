@@ -10,9 +10,6 @@ process PER_GENE_BART {
 
   input:
     val gene_list
-    path nps
-    val ntree
-    path test_data
   output:
     file "*_bart_out.rds"
 
@@ -22,13 +19,13 @@ process PER_GENE_BART {
 
     library(bartNP)
     
-    nps = readRDS("${nps}")
+    nps = readRDS("${params.nps}")
 
     gene_list = split("${gene_list}", ",")[[1]]
 
-    test_data = readRDS("${test_data}")
+    test_data = readRDS("${params.test_data}")
         
-    n_tree = as.numeric(${ntree})
+    n_tree = as.numeric(${params.ntree})
 
     for(gene in gene_list){
 
