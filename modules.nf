@@ -42,7 +42,7 @@ process PER_GENE_BART {
                                   response_array, 
                                   test_data,
                                   ntree = n_tree, 
-                                  mc.cores = as.numeric(${task.cpus}))
+                                  mc.cores = as.numeric(${task.cpus})-1)
 
         saveRDS(bart_out, file = output_filename)
     }
