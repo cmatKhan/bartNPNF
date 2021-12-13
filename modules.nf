@@ -30,6 +30,8 @@ process PER_GENE_BART {
 
     for(gene in gene_list){
 
+      cl = parallel::makeForkCluster(nnodes = 5)
+
         predictors = regPredictors(nps, as.character(gene))
     
         response_array = as.vector(exprMat(nps[gene,]))
@@ -44,6 +46,7 @@ process PER_GENE_BART {
                                   ntree = n_tree, 
                                   mc.cores = as.numeric(${task.cpus}))
 
+        stopCluster(cl)
         saveRDS(bart_out, file = output_filename)
     }
   """
