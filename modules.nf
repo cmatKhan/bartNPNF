@@ -30,8 +30,6 @@ process PER_GENE_BART {
 
     for(gene in gene_list){
 
-      cl = parallel::makePSOCKcluster(as.numeric(${task.cpus}))
-
         predictors = regPredictors(nps, as.character(gene))
     
         response_array = as.vector(exprMat(nps[gene,]))
@@ -44,9 +42,8 @@ process PER_GENE_BART {
                                   response_array, 
                                   test_data,
                                   ntree = n_tree, 
-                                  mc.cores = as.numeric(${task.cpus}))
+                                  mc.cores = 1)
 
-        stopCluster(cl)
         saveRDS(bart_out, file = output_filename)
     }
   """
