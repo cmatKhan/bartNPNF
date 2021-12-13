@@ -30,7 +30,7 @@ process PER_GENE_BART {
 
     for(gene in gene_list){
 
-      cl = parallel::makePSOCKCluster(nnodes = as.numeric(${task.cpus}))
+      cl = parallel::makePSOCKcluster(nnodes = as.numeric(${task.cpus}))
 
         predictors = regPredictors(nps, as.character(gene))
     
