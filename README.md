@@ -5,6 +5,9 @@
 
 # Installation
 
+Simply `git clone https://github.com/cmatKhan/bartNFNP` to the system on which you wish to run 
+this pipeline.
+
 ## Dependencies
 
 For HTCF, you need the following:
@@ -15,53 +18,43 @@ For HTCF, you need the following:
 
 ## Running the pipeline on HTCF
 
-2. Create a params file
+3. See the vignette in [bartNP](https://cmatkhan.github.io/bartNP/articles/holstege_deleteome_nps.html) 
+to construct the data object.
+
+4. Save the data on the system on which you wish to run the pipeline.
+
+`gene_list.csv` is a single column csv with header `gene` of the gene names in the data
+`kemmeren_np_fltr.rds` is the data object constructed in 3.
 
 ```{json}
 {
-"gene_list": "data/gene_list_10.csv",
+"gene_list": "data/gene_list.csv",
 "nps": "data/kemmeren_np_fltr.rds",
-"test_data": "data/test_tf_levels_full.rds",
-"results": "results_10",
-"x.test": "data/test_tf_levels_full.rds"
+"results": "results"
 }
 ```
 
-3. Clone this repository to whatever the working directory will be for running bart. For example, 
-you can look at `/scratch/mblab/chasem/bartNP`
+5. Run nextflow. You can either run this on an interactive node, or use a script akin to the one below.
 
-4. Copy the data from `/scratch/mblab/chasem/bartNP/data` into your working directory
+```{bash}
+#!/bin/bash
 
-5. update the ./bartNPNF/nextflow.config. You should make sure the paths are correct in the `params` 
-section for `gene_list`, `nps`, `test_data`, `x.test`. `results` controls where the `results` directory 
-is output to -- default is in the `${launchDir}`. The global variable `${launchDir}` is the directory 
-from which you launch nextflow. If that isn't clear, please ask.
+#SBATCH --time=2-25:00:00  # right now, 15 hours. change depending on time expectation to run
+#SBATCH --mem-per-cpu=10G
+#SBATCH -J nf_test.out
+#SBATCH -o nf_test.out
 
-6. At this point, you have two options. you can either copy `/scratch/mblab/chasem/bartNP/run_nextflow.sh`. 
-Open that script, read it, and make sure that all the paths, etc are correct for your environment. 
-Launch the process with `sbatch run_nextflow.sh` (assuming you're in the same directory as the script).  
-
-Alternatively, launch an interactive session and do the following:  
-
-```
-# load the cluster singularity
 ml singularity
+ml miniconda
 
-# do whatever it is you need to do to launch your conda environment with nextflow. FOR EXAMPLE
-source activate /scratch/mblab/$USER/rnaseq_pipeline/conda_envs/nextflow
+source activate /scratch/mblab/chasem/rnaseq_pipeline/conda_envs/nextflow
 
-# set a variable pointing towards the config path in your bartNPNF directory (you need to update this)
-config_path=/path/to/bartNPNF/nextflow.config
+mkdir tmp
 
-nextflow run nfNP/main.nf -c $config_path
+num=10
+
+params=params_${num}.json
+
+nextflow run bartNPNF/main.nf -params-file $params -resume
+
 ```
-
-I have run this, but I have not run through these installation instructions with anyone else. If you do this, you will 
-be the first. As a result, if anything is unclear, let me know. If the paths are all correct, this will execute for you without 
-any other setup.
-
-## Running the pipeline on your local
-
-This is simple, but I haven't written in the configuration. If you would like to try this out, 
-you can look at the nextflow documentation and see if you can write the appropriate configuration 
-in the `nextflow.config` script. Otherwise, I will do this at some point after Wednesday.

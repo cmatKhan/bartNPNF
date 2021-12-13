@@ -9,7 +9,7 @@ process PER_GENE_BART {
   publishDir "$params.results" 
 
   input:
-    val gene_list
+    val gene
     path nps
   output:
     file "*_bart_out.rds"
@@ -20,32 +20,26 @@ process PER_GENE_BART {
 
     library(bartNP)
     
-    nps = readRDS("${params.nps}")
+    nps = readRDS("${nps}")
 
-    gene_list = strsplit(${gene_list}, ",")[[1]]
+    predictors = regPredictors(nps, "${gene}")
 
     test_data = readRDS("${params.test_data}")
-        
+    
     n_tree = as.numeric(${params.ntree})
 
-    for(gene in gene_list){
+    response_array = as.vector(exprMat(nps["${gene}",]))
 
-        predictors = regPredictors(nps, as.character(gene))
+    output_filename = paste0("${gene}", "_bart_out.rds")
+
+    bart_out = bartForOneGene(predictors, 
+                              response_array, 
+                              test_data,
+                              ntree = n_tree, 
+                              mc.cores = as.numeric(${task.cpus}))
+
+    saveRDS(bart_out, file = output_filename)
     
-        response_array = as.vector(exprMat(nps[gene,]))
-
-        output_filename = paste0(gene, "_bart_out.rds")
-        
-        # note: this is wrapped in a function in bartNP, but 
-        #       it only calls mc.wbart()
-        bart_out = bartForOneGene(predictors, 
-                                  response_array, 
-                                  test_data,
-                                  ntree = n_tree, 
-                                  mc.cores = 1)
-
-        saveRDS(bart_out, file = output_filename)
-    }
   """
 }
 
