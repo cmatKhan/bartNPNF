@@ -23,8 +23,6 @@ process PER_GENE_BART {
     nps = readRDS("${nps}")
 
     predictors = regPredictors(nps, "${gene}")
-
-    test_data = readRDS("${params.test_data}")
     
     n_tree = as.numeric(${params.ntree})
 
@@ -34,12 +32,11 @@ process PER_GENE_BART {
 
     bart_out = bartForOneGene(predictors, 
                               response_array, 
-                              test_data,
                               ntree = n_tree, 
                               mc.cores = as.numeric(${task.cpus}))
 
     saveRDS(bart_out, file = output_filename)
-    
+
   """
 }
 

@@ -19,7 +19,9 @@ For HTCF, you need the following:
 ## Running the pipeline on HTCF
 
 3. See the vignette in [bartNP](https://cmatkhan.github.io/bartNP/articles/holstege_deleteome_nps.html) 
-to construct the data object.
+to construct the data object.  
+
+Alternatively, ask me and I can send you the object. It is too large to place on github.
 
 4. Save the data on the system on which you wish to run the pipeline.
 
